@@ -1,0 +1,19 @@
+{
+  "name": "deltagate",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "A cross-language dependency-update gate: diff two published versions, score the change, hold anything dangerous. Deterministic engine (npm) — Phase 1.",
+  "license": "Apache-2.0",
+  "bin": {
+    "deltagate": "bin/deltagate.js"
+  },
+  "scripts": {
+    "test": "node test/run.js",
+    "analyze": "node bin/deltagate.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {}
+}

@@ -1,119 +1,194 @@
 # DeltaGate
 
-A cross-language dependency-update gate. When a package you depend on has an
-update, DeltaGate fetches both versions **as published artifacts**, diffs them,
-and holds the update if the change looks dangerous — leaving your current stable
-version in place. It never modifies your machine beyond allowing or holding an
-update, and every verdict (with its reasoning) is meant to be published in the
-open so the next person benefits from your analysis.
+**The gate the whole ecosystem built — and left empty.**
 
-> **Status: Phase 1 — the deterministic engine, npm only.**
-> This is the *Sentinel* layer: fast, rule-based, zero-AI, zero-dependency. It
-> catches most 2024–26 supply-chain attacks on its own and is the trust anchor
-> the AI and enforcement layers build on. See the full architecture in the
-> design doc.
+Every package manager now delays new releases at the gate (`pnpm` defaults to a
+24-hour cooldown; npm, uv, Bun, Dependabot all followed). Every one of those
+gates is a **dumb timer**. DeltaGate reads the actual code **diff** between the
+version you have and the update, scores its intent, and holds anything dangerous
+back — locally, across every language, with the reasoning in the open.
 
-## Run it
+![license](https://img.shields.io/badge/license-Apache--2.0-blue)
+![node](https://img.shields.io/badge/node-%E2%89%A520-informational)
+![dependencies](https://img.shields.io/badge/runtime%20deps-0-brightgreen)
+![ecosystems](https://img.shields.io/badge/ecosystems-npm%20·%20PyPI%20·%20Cargo%20·%20RubyGems-8A63D2)
+![false positives](https://img.shields.io/badge/eval%20FP-0%25%20·%208%2F8%20recall-brightgreen)
 
-Needs Node ≥ 20. **No dependencies to install.**
+```text
+  npm keyv  5.9.0 → 6.0.0
+  ● BLOCK  8/100  verdict HOLD  confidence high
+  + "preinstall": "node setup.mjs"
+  + Math_Symbol.js  (727 KB, entropy 7.98)
+
+  → INSTALL_HOOK_WITH_BLOB   install-time script paired with a new opaque blob
+  → OPAQUE_BLOB_NEW          727 KB high-entropy blob — unreadable, so unauditable
+  → INSTALL_HOOK_NEW         new "preinstall" runs code on install
+
+  Held. You stay on 5.9.0.   Override: deltagate allow keyv@6.0.0
+```
+
+---
+
+## Why
+
+For the majority of high-impact supply-chain attacks of 2024–26 — chalk/debug,
+`@solana/web3.js`, both Shai-Hulud worm waves, keyv/cacheable, TanStack, axios —
+the payload shipped **inside** the published version: diff-visible, and flaggable
+by reading the change. A peer-reviewed prototype (RAID 2025) hit **209/209**
+historical malicious npm updates at a **0.4%** false-positive rate.
+
+And provenance no longer saves you: TanStack shipped malware with a valid SLSA
+Build L3 attestation, keyv with valid npm provenance. Signatures prove *who built
+it* — never *what it does*. Reading the code is the thing that still works.
+
+## Quickstart
+
+Needs Node ≥ 20. **Zero dependencies to install.**
 
 ```bash
+git clone https://github.com/reactivezero/deltagate && cd deltagate
+
 # analyze a live update — npm, PyPI, Cargo, or RubyGems
-node bin/deltagate.js npm   left-pad 1.2.0 1.3.0
+node bin/deltagate.js npm   chalk 5.3.0 5.3.1
 node bin/deltagate.js pypi   requests 2.31.0 2.32.0
 node bin/deltagate.js cargo  anyhow 1.0.85 1.0.86
 node bin/deltagate.js gem    colorize 0.8.1 1.0.0
 
-# analyze two local package directories (offline)
-node bin/deltagate.js diff ./pkg-old ./pkg-new
-
-# add the AI intent layer (needs an Anthropic API key, not a Claude.ai subscription)
+# add the AI intent layer (needs an Anthropic API key — see below)
 ANTHROPIC_API_KEY=sk-ant-... node bin/deltagate.js npm <pkg> <from> <to> --ai
 
-# raw verdict record (what gets published to the open DB)
+# analyze two local package directories, or emit the raw record
+node bin/deltagate.js diff ./old ./new
 node bin/deltagate.js npm <pkg> <from> <to> --json
-
-# run the test suite
-npm test
 ```
 
-## The AI layer (`--ai`)
+The CLI exits `1` when the gate would **hold** and `0` when it allows — it drops
+straight into CI.
 
-On top of the deterministic rules, an LLM reads the changed code for *intent*.
-The harness is built to survive a hostile diff:
+## How it works
 
-- The model **never emits a score** — it returns typed, evidence-anchored
-  capability findings, and a fixed table turns those into caps/penalties.
-- Findings can only **lower** the score, never raise it. A fully
-  prompt-injected model degrades the system to deterministic-rules-only.
-- The diff is fed as **untrusted data**: comments split into a separate channel,
-  all non-ASCII armored to visible escapes, wrapped in a per-run nonce.
-- A **seeded probe** every run detects a suppressed or instruction-following
-  model; a compliance nonce catches a model that can't follow the contract.
-- Every finding is **grounded** (its cited token must exist in the sent code) or
-  it's dropped. Detected prompt-injection text caps the score at 5.
+Three independent layers, fused by **MIN** so an attacker has to beat all three
+at once — and beating the most attackable one (the LLM) buys nothing.
 
-Model is configurable via `DELTAGATE_MODEL` (default `claude-haiku-4-5`). The
-API client uses raw `fetch` — no SDK dependency, keeping the tool zero-dep.
+| Layer | What it does |
+|---|---|
+| **1 · Sentinel** (deterministic) | ~9 signed rules over the raw bytes of the diff. Each hit sets a score **ceiling**. Catches most real attacks alone, and is immune to prompt injection because no model is involved. |
+| **2 · Adapters** (per-ecosystem) | Install/build-hook and dependency rules that only the ecosystem knows — npm scripts, `setup.py`/`.pth`, `build.rs`, gemspec extensions. |
+| **3 · AI** (optional, `--ai`) | An LLM reads the changed code for *intent*. It **never emits a score** — it returns typed, evidence-anchored findings that can only **lower** it. |
 
-The CLI exits `1` when the gate would **hold** an update and `0` when it allows
-it, so it drops straight into CI.
+> **The invariant:** deterministic evidence sets ceilings that nothing downstream
+> can raise. A fully prompt-injected or compromised model degrades the system to
+> "deterministic rules only" — which already catch most attacks. Injection,
+> poisoning, even a bad model can cause a *false hold*, never a *false allow*. And
+> a false hold is nearly free: you just stay on the version you already had.
 
-## What the Sentinel layer detects today
+## What the deterministic layer detects
 
 Each rule sets a score *ceiling* (the final score is the **minimum** of all
 ceilings), and each traces to a real attack:
 
-| Rule | Signal | Attack it mirrors |
+| Rule | Signal | Mirrors |
 |---|---|---|
-| `INSTALL_HOOK_NEW` / `_MODIFIED` | new/changed pre/post/install script | Shai-Hulud, keyv, LiteLLM |
-| `OPAQUE_BLOB_NEW` | new large high-entropy unreadable file | keyv 727 KB second stage |
-| `INSTALL_HOOK_WITH_BLOB` | install hook **+** opaque blob together | keyv dropper shape |
-| `NATIVE_BINARY_NEW` | first machine-code binary in a source pkg | xz-style planted binaries |
+| `INSTALL_HOOK_NEW` / `_MODIFIED` | new/changed pre/post/install script | Shai-Hulud, keyv |
+| `INSTALL_HOOK_WITH_BLOB` | install hook **+** opaque blob together | keyv dropper |
+| `OPAQUE_BLOB_NEW` | new large high-entropy unreadable file | keyv 727 KB stage |
+| `NATIVE_BINARY_NEW` | first machine-code binary in a source pkg | xz-style plant |
 | `INVISIBLE_UNICODE` | invisible/bidi codepoints in code | GlassWorm |
-| `NON_REGISTRY_DEP` | dependency resolves outside the registry | PhantomRaven remote deps |
+| `NON_REGISTRY_DEP` | dependency resolves outside the registry | PhantomRaven |
 | `EVAL_DECODE_EXEC` | decodes a string then executes it | chalk/debug clipper |
-| `OBFUSCATION_PACKED` | packed / hex-escaped code | obfuscated payloads |
-| `NET_PLUS_EXEC` | new file that fetches **and** executes | Ultralytics / axios loaders |
+| `OBFUSCATION_PACKED` | code that *became* obfuscated this version | packed payloads |
+| `NET_PLUS_EXEC` | new file that fetches **and** executes | axios / Ultralytics |
+| PyPI · Cargo · Ruby | `setup.py`/`.pth`, `build.rs`, gemspec extensions | LiteLLM `.pth` |
 
 Everything runs on **raw bytes**, never rendered text — that's what makes
-invisible-unicode and opaque blobs visible.
+invisible unicode and opaque blobs visible.
 
-## How it's built
+## The score
 
-```
-bin/deltagate.js     CLI
-src/loaders.js       fetch from npm (integrity-verified) or a local dir
-src/untar.js         dependency-free tar reader
-src/normalize.js     per-file profile: sha256, entropy, unicode, magic bytes
-src/heuristics.js    Sentinel — the deterministic rules (score ceilings)
-src/score.js         MIN-fusion of ceilings + penalties → score / band / verdict
-src/analyze.js       orchestrator → verdict record (selects the ecosystem adapter)
-src/heuristics.js    Sentinel — ecosystem-agnostic rules
-src/unpack.js        dependency-free tar / tar.gz / zip reader (wheels, crates, gems)
-src/ecosystems/      per-ecosystem adapters (npm, pypi, cargo, rubygems): fetch + install-hook rules
-src/ai/              injection-resistant LLM harness (schema, encode, client, harness)
-test/run.js          golden tests reconstructing real attack shapes
-test/ai.test.js      AI-harness tests (stub model, no API key needed)
-eval/                corpus + eval harness (recall / false-positive measurement)
-```
+One number, 0–100 (100 = clean). The default gate blocks below 50, coupled with
+confidence so a low-confidence low score *holds and re-analyzes* rather than
+asserting the package is bad.
+
+| Band | Range | Behavior |
+|---|---|---|
+| 🟥 **Block** | 0–24 | filtered; override needs a typed reason |
+| 🟧 **Hold** | 25–49 | held; you stay on stable; one-line override |
+| 🟨 **Caution** | 50–69 | allowed, annotated |
+| 🟩 **Clear** | 70–100 | installs silently |
+
+## The AI layer (`--ai`)
+
+The diff is attacker-controlled, and malware already embeds text to fool LLM
+scanners (the Hades PyPI campaign). The harness is built to survive that:
+
+- The model returns **typed capability findings, never a score**; findings can
+  only lower it, and a fixed table does the scoring.
+- The diff is fed as **untrusted data** — comments split off, all non-ASCII
+  armored to visible escapes, wrapped in a per-run nonce.
+- A **seeded probe** each run detects a suppressed or instruction-following
+  model; every finding must be **grounded** in the sent code or it's dropped;
+  detected prompt-injection text caps the score at **5**.
+
+Uses raw `fetch`, **no SDK dependency** (a supply-chain tool shouldn't ship a
+dependency tree). Model via `DELTAGATE_MODEL` (default `claude-haiku-4-5`).
+Needs an **Anthropic API key** (`console.anthropic.com`) — a Claude.ai / Claude
+Max subscription is billed separately and does not grant API access.
+
+## How it compares
+
+| | AI on the **diff** | Blocks locally | Every language | **Open** verdicts |
+|---|---|---|---|---|
+| Socket.dev | whole package | malware only | 10+ | closed |
+| Aikido Safe Chain | feed lookup | ✅ | JS + Py | positives only |
+| cargo-vet | human audit | CI gate | Rust only | ✅ |
+| **DeltaGate** | ✅ **the diff** | ✅ | 4 → more | ✅ **+ reasoning** |
+
+The wedge: **diff-scoped AI + open reasoning + a local cross-ecosystem gate.**
+Verdicts (and *why*) are meant to be published in the open so one analysis serves
+everyone — free for every developer and team, forever, on open-source packages.
 
 ## Evaluation
 
-`node eval/run.mjs` measures the engine against reconstructed attack shapes and
-live benign updates. Current deterministic engine: **8/8 recall** on the
-synthetic npm attack shapes, **0% false positives** across 31 benign updates.
+`node eval/run.mjs` measures the engine against reconstructed 2024–26 attack
+shapes and live benign updates:
+
+```text
+  Synthetic npm attack recall : 8/8   (100.0%)
+  False positives             : 0/31  (0.0%)
+  32 unit tests green (14 Sentinel + 18 AI harness)
+```
+
 The corpus uses `ossf/malicious-packages` for labels and Datadog's dataset for
-real sample bytes (see `eval/README.md`).
+real sample bytes — see [`eval/README.md`](eval/README.md).
 
-## Not built yet (next phases)
+## Project layout
 
-- **Open verdict DB** — a miss fires a request; our backend analyzes it and
-  publishes the signed verdict to a public repo so everyone benefits.
-- **Local enforcement** — the metadata-filtering proxy / wrappers that actually
-  hold the update in each package manager.
-- **More ecosystems** — Maven, NuGet, Go, Composer round out the set.
+```
+bin/deltagate.js     CLI  (npm | pypi | cargo | gem | diff)
+src/heuristics.js    Sentinel — ecosystem-agnostic rules
+src/ecosystems/      per-ecosystem adapters (fetch + install-hook rules)
+src/unpack.js        dependency-free tar / tar.gz / zip reader
+src/normalize.js     per-file profile: sha256, entropy, unicode, magic bytes
+src/score.js         MIN-fusion of ceilings + penalties → score / band / verdict
+src/ai/              injection-resistant LLM harness
+src/analyze.js       orchestrator → verdict record
+eval/                corpus + recall / false-positive harness
+test/                golden tests (no API key needed)
+```
+
+## Status & roadmap
+
+**Shipped:** deterministic engine · injection-resistant AI layer · npm, PyPI,
+Cargo, RubyGems · eval harness.
+**Next:** open verdict database (request-driven, published in the open) · local
+enforcement (metadata-filtering proxy that holds the update) · Maven, NuGet, Go,
+Composer.
+
+## Contributing & security
+
+Issues and PRs welcome. Found a way past the gate? That's the most valuable kind
+of report — open an issue with the diff shape that slips through.
 
 ## License
 
-Apache-2.0 (client/engine). See `LICENSE`.
+Apache-2.0. See [`LICENSE`](LICENSE).

@@ -5,9 +5,11 @@
 //   deltagate diff <dirA> <dirB>           analyze two local package dirs
 //   ... add --json for the raw verdict record
 
-import { analyzeNpm, analyzeArtifacts, analyzeArtifactsAI } from '../src/analyze.js';
+import { analyzeNpm, analyzePypi, analyzeCargo, analyzeRubygems, analyzeArtifacts, analyzeArtifactsAI } from '../src/analyze.js';
 import { loadDir } from '../src/loaders.js';
 import { hasApiKey } from '../src/ai/index.js';
+
+const REGISTRIES = { npm: analyzeNpm, pypi: analyzePypi, cargo: analyzeCargo, gem: analyzeRubygems };
 
 const BANDS = {
   block:   { label: 'BLOCK',   sym: '●', color: '\x1b[31m' },
@@ -75,10 +77,10 @@ async function main() {
 
   try {
     let verdict;
-    if (cmd === 'npm') {
+    if (REGISTRIES[cmd]) {
       const [, name, from, to] = args;
-      if (!name || !from || !to) throw new Error('usage: deltagate npm <package> <from> <to>');
-      verdict = await analyzeNpm(name, from, to, { ai });
+      if (!name || !from || !to) throw new Error(`usage: deltagate ${cmd} <package> <from> <to>`);
+      verdict = await REGISTRIES[cmd](name, from, to, { ai });
     } else if (cmd === 'diff') {
       const [, a, b] = args;
       if (!a || !b) throw new Error('usage: deltagate diff <dirA> <dirB>');
@@ -88,8 +90,8 @@ async function main() {
         : analyzeArtifacts(loadDir(a), loadDir(b), subject);
     } else {
       console.error('deltagate — dependency-update gate\n');
-      console.error('  deltagate npm  <package> <from> <to>   analyze a live npm update');
-      console.error('  deltagate diff <dirA> <dirB>           analyze two local package dirs');
+      console.error('  deltagate npm|pypi|cargo|gem <package> <from> <to>   analyze a live update');
+      console.error('  deltagate diff <dirA> <dirB>                        analyze two local package dirs');
       console.error('  flags: --ai (LLM intent layer, needs ANTHROPIC_API_KEY) · --json (raw record)');
       process.exit(2);
     }

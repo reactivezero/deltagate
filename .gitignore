@@ -5,3 +5,6 @@ node_modules/
 .env.*
 /tmp/
 *.tgz
+
+# generated eval artifact (regenerated every run)
+eval/last-report.json

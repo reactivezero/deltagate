@@ -1,15 +1,12 @@
 // Sentinel — the deterministic rule layer. Each fired rule emits a score CEILING
 // (cap). Ceilings compose by MIN downstream, so no AI or vote can lift them.
-// Every rule traces to a real 2024–26 supply-chain attack.
+//
+// This file holds the ECOSYSTEM-AGNOSTIC rules (opaque blobs, native binaries,
+// invisible unicode, decode-then-exec / packing / network+exec). The per-ecosystem
+// install/build-hook and dependency rules live in each adapter's manifestRules()
+// (src/ecosystems/*) and are injected here via the `adapter` argument.
 
-const INSTALL_HOOKS = ['preinstall', 'install', 'postinstall', 'prepare'];
 const CODE_RE = /\.(c?js|mjs|jsx|tsx?|json)$/i;
-
-function parseJson(profiles, path) {
-  const p = profiles.get(path);
-  if (!p || p.text == null) return null;
-  try { return JSON.parse(p.text); } catch { return null; }
-}
 
 function deltas(from, to) {
   const added = [], modified = [], removed = [];
@@ -22,72 +19,26 @@ function deltas(from, to) {
   return { added, modified, removed };
 }
 
-function isNonRegistrySpec(spec) {
-  if (typeof spec !== 'string') return false;
-  if (spec.includes('://')) return true;
-  if (/^(git\+|git:|file:|github:|bitbucket:|gitlab:)/i.test(spec)) return true;
-  // owner/repo shorthand — but not the npm: alias form
-  if (!spec.startsWith('npm:') && /^[\w.-]+\/[\w.-]+/.test(spec)) return true;
-  return false;
-}
-
-function allDeps(pkg) {
-  return {
-    ...(pkg?.dependencies || {}),
-    ...(pkg?.optionalDependencies || {}),
-    ...(pkg?.devDependencies || {}),
-  };
-}
-
 /**
  * @param {Map<string,object>} fromP  profileArtifact() of the installed version
  * @param {Map<string,object>} toP    profileArtifact() of the candidate version
+ * @param {object|null} adapter       ecosystem adapter (provides manifestRules)
  * @returns {Array<Finding>}
  */
-export function runSentinel(fromP, toP) {
+export function runSentinel(fromP, toP, adapter = null) {
   const findings = [];
-  const { added, modified } = deltas(fromP, toP);
+  const { added, modified, removed } = deltas(fromP, toP);
   const changed = [...added, ...modified];
   const add = (f) => findings.push(f);
 
-  const fromPkg = parseJson(fromP, 'package.json');
-  const toPkg = parseJson(toP, 'package.json');
-
-  // ── R1: install-time lifecycle hooks (Shai-Hulud, keyv, LiteLLM) ──────────
-  const fromScripts = fromPkg?.scripts || {};
-  const toScripts = toPkg?.scripts || {};
-  let hookNew = false, hookMod = false;
-  for (const h of INSTALL_HOOKS) {
-    if (toScripts[h] && !fromScripts[h]) {
-      hookNew = true;
-      add(cap('INSTALL_HOOK_NEW', 25, 'high',
-        `new "${h}" lifecycle script runs code on install`,
-        [{ file: 'package.json', detail: `${h}: ${trunc(toScripts[h])}` }]));
-    } else if (toScripts[h] && fromScripts[h] && toScripts[h] !== fromScripts[h]) {
-      hookMod = true;
-      add(cap('INSTALL_HOOK_MODIFIED', 30, 'medium',
-        `existing "${h}" install script changed`,
-        [{ file: 'package.json', detail: `${h}: ${trunc(toScripts[h])}` }]));
-    }
-  }
-
   // ── R2: new opaque/encrypted blob (keyv 727KB second stage) ───────────────
-  const opaque = [];
   for (const path of changed) {
     const p = toP.get(path);
     if (p.binary && !p.native && !p.media && p.size >= 50_000 && p.entropy >= 7.2) {
-      opaque.push(path);
       add(cap('OPAQUE_BLOB_NEW', 20, 'high',
         `new ${kb(p.size)} high-entropy blob (${p.entropy.toFixed(2)} bits/byte) — unreadable, so unauditable`,
         [{ file: path, detail: `${kb(p.size)}, entropy ${p.entropy.toFixed(2)}` }]));
     }
-  }
-
-  // ── R3: the keyv signature — install hook + opaque blob together ──────────
-  if ((hookNew || hookMod) && opaque.length) {
-    add(cap('INSTALL_HOOK_WITH_BLOB', 8, 'critical',
-      'install-time script paired with a new opaque blob — the classic dropper shape',
-      [{ file: opaque[0], detail: 'runs on install and cannot be read' }]));
   }
 
   // ── R4: first native machine-code binary in a source package ──────────────
@@ -111,22 +62,14 @@ export function runSentinel(fromP, toP) {
     }
   }
 
-  // ── R6: new non-registry dependency (PhantomRaven remote deps) ────────────
-  const fromDeps = allDeps(fromPkg), toDeps = allDeps(toPkg);
-  for (const [name, spec] of Object.entries(toDeps)) {
-    if (fromDeps[name] === spec) continue;
-    if (isNonRegistrySpec(spec)) {
-      add(cap('NON_REGISTRY_DEP', 15, 'high',
-        `dependency "${name}" resolves outside the registry — code fetched from ${trunc(spec)}`,
-        [{ file: 'package.json', detail: `${name}: ${spec}` }]));
-    }
-  }
-
   // ── R7: decode-then-execute + fetch-then-execute droppers ─────────────────
   const evalDecode = /\b(eval|new\s+Function)\s*\(\s*(atob|unescape|decodeURIComponent|Buffer\.from|String\.fromCharCode)/;
   const netApi = /require\(\s*['"](https?|node:https?|node-fetch|axios|got|undici)['"]|\bfetch\s*\(|XMLHttpRequest/;
   const execApi = /require\(\s*['"](child_process|node:child_process)['"]|\b(exec|execSync|spawn|spawnSync|fork)\s*\(/;
-  const packed = /\\x[0-9a-f]{2}(?:.*\\x[0-9a-f]{2}){40,}|_0x[0-9a-f]{4,}/i;
+  // NB: requires 40+ CONSECUTIVE \x escapes. The earlier form used `.*` between
+  // escapes, which caused catastrophic backtracking (ReDoS) that hung the CLI on
+  // large minified bundles — this form is linear.
+  const packed = /(?:\\x[0-9a-f]{2}){40,}|_0x[0-9a-f]{4,}/i;
   for (const path of changed) {
     if (!CODE_RE.test(path) || path.endsWith('.json')) continue;
     const p = toP.get(path);
@@ -137,15 +80,28 @@ export function runSentinel(fromP, toP) {
         'decodes a string and executes it (eval/Function of atob/Buffer/fromCharCode)',
         [{ file: path, detail: 'decode-then-exec' }]));
     } else if (packed.test(t) && longestLine(t) > 3000) {
-      add(cap('OBFUSCATION_PACKED', 45, 'medium',
-        'heavily obfuscated / packed code (hex-escape or _0x string arrays on very long lines)',
-        [{ file: path, detail: `longest line ${longestLine(t)} chars` }]));
+      // Only flag obfuscation that NEWLY appears — a package that already shipped
+      // a minified/packed bundle in the prior version (prettier's vendored
+      // plugins, etc.) isn't a signal; obfuscation injected into a previously
+      // readable file is (the chalk/debug clipper).
+      const ft = fromP.get(path)?.text;
+      const wasPacked = ft != null && packed.test(ft) && longestLine(ft) > 3000;
+      if (!wasPacked) {
+        add(cap('OBFUSCATION_PACKED', 45, 'medium',
+          'code became obfuscated/packed in this version (hex-escape or _0x string arrays on very long lines)',
+          [{ file: path, detail: `longest line ${longestLine(t)} chars` }]));
+      }
     }
-    if (netApi.test(t) && execApi.test(t) && (added.includes(path))) {
+    if (netApi.test(t) && execApi.test(t) && added.includes(path)) {
       add(cap('NET_PLUS_EXEC', 30, 'high',
         'new file both fetches from the network and executes commands — remote-payload loader shape',
         [{ file: path, detail: 'network + child_process in one added file' }]));
     }
+  }
+
+  // ── ecosystem-specific install/build-hook + dependency rules ──────────────
+  if (adapter?.manifestRules) {
+    findings.push(...adapter.manifestRules(fromP, toP, { added, modified, removed }));
   }
 
   return findings;
@@ -155,6 +111,5 @@ export function runSentinel(fromP, toP) {
 function cap(code, capValue, severity, title, evidence) {
   return { code, cap: capValue, severity, title, evidence };
 }
-function trunc(s, n = 80) { s = String(s); return s.length > n ? s.slice(0, n) + '…' : s; }
 function kb(bytes) { return (bytes / 1024).toFixed(0) + ' KB'; }
 function longestLine(t) { let m = 0; for (const l of t.split('\n')) if (l.length > m) m = l.length; return m; }

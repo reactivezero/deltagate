@@ -1,0 +1,1745 @@
+{
+  "source": "github.com/ossf/malicious-packages (osv/malicious/npm)",
+  "note": "OSV advisory labels only — no payload bytes. Versions are usually \"*\" (the advisory marks the whole package). Real bytes: DataDog/malicious-software-packages-dataset. Negatives: live benign in benign.json.",
+  "generatedAt": "2026-08-12T20:44:20.687Z",
+  "listedTotal": 37484,
+  "listedTruncated": true,
+  "sampled": 200,
+  "kept": 200,
+  "droppedCount": 0,
+  "labels": [
+    {
+      "name": "--hiljson",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-2",
+      "summary": "Malicious code in --hiljson (npm)"
+    },
+    {
+      "name": "04xi_mfz",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-13",
+      "summary": "Malicious code in 04xi_mfz (npm)"
+    },
+    {
+      "name": "-accion-pelicula-john-wick-4-keanu-reeves-peliculas-completa-varindo-allah-varindo-en-casa-lliena-",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1677",
+      "summary": "Malicious code in -accion-pelicula-john-wick-4-keanu-reeves-peliculas-completa-varindo-allah-varindo-en-casa-lliena- (npm)"
+    },
+    {
+      "name": "-pem-misa",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-179413",
+      "summary": "Malicious code in -pem-misa (npm)"
+    },
+    {
+      "name": "01-0redi7qgbz0uv",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2026-3666",
+      "summary": "Malicious code in 01-0redi7qgbz0uv (npm)"
+    },
+    {
+      "name": "--legacy-peer-deps",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-3",
+      "summary": "Malicious code in --legacy-peer-deps (npm)"
+    },
+    {
+      "name": "123rf-ui-core",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-14",
+      "summary": "Malicious code in 123rf-ui-core (npm)"
+    },
+    {
+      "name": "-accion-pelicula-john-wick-4-keanu-reeves-peliculas-completa-varindo-h-d-varindo-en-casa-lliena-",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1678",
+      "summary": "Malicious code in -accion-pelicula-john-wick-4-keanu-reeves-peliculas-completa-varindo-h-d-varindo-en-casa-lliena- (npm)"
+    },
+    {
+      "name": "0-snap-score318",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6974",
+      "summary": "Malicious code in 0-snap-score318 (npm)"
+    },
+    {
+      "name": "0ctf-chalweb",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2026-3667",
+      "summary": "Malicious code in 0ctf-chalweb (npm)"
+    },
+    {
+      "name": "--no-audit",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-4",
+      "summary": "Malicious code in --no-audit (npm)"
+    },
+    {
+      "name": "123rf_contributor_web",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-15",
+      "summary": "Malicious code in 123rf_contributor_web (npm)"
+    },
+    {
+      "name": "-espanol-john-wick-keanu-4-k-varindo-en-casa-en-lienia-lliena-love",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1679",
+      "summary": "Malicious code in -espanol-john-wick-keanu-4-k-varindo-en-casa-en-lienia-lliena-love (npm)"
+    },
+    {
+      "name": "007007-simple-calculator",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6975",
+      "summary": "Malicious code in 007007-simple-calculator (npm)"
+    },
+    {
+      "name": "0xegg2024",
+      "versions": [
+        "1.0.2"
+      ],
+      "id": "MAL-2026-3668",
+      "summary": "Malicious code in 0xegg2024 (npm)"
+    },
+    {
+      "name": "-d3-ushape",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-5",
+      "summary": "Malicious code in -d3-ushape (npm)"
+    },
+    {
+      "name": "1ds-cli",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-1456",
+      "summary": "Malicious code in 1ds-cli (npm)"
+    },
+    {
+      "name": "-espanol-john-wick-keanu-reeves-4-k-varindo-en-casa-en-lienia-lliena-love",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1680",
+      "summary": "Malicious code in -espanol-john-wick-keanu-reeves-4-k-varindo-en-casa-en-lienia-lliena-love (npm)"
+    },
+    {
+      "name": "02-echo",
+      "versions": [
+        "0.0.7"
+      ],
+      "id": "MAL-2025-191025",
+      "summary": "Malicious code in 02-echo (npm)"
+    },
+    {
+      "name": "0xhash-utils",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2026-767",
+      "summary": "Malicious code in 0xhash-utils (npm)"
+    },
+    {
+      "name": "-gzip-ize",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-6",
+      "summary": "Malicious code in -gzip-ize (npm)"
+    },
+    {
+      "name": "1password-postman-integration",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2023-1077",
+      "summary": "Malicious code in 1password-postman-integration (npm)"
+    },
+    {
+      "name": "-john-wick-4-keanu-reeves-pelicula-completa-4-k-varindo-en-casa-en-lienia-lliena-love",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1681",
+      "summary": "Malicious code in -john-wick-4-keanu-reeves-pelicula-completa-4-k-varindo-en-casa-en-lienia-lliena-love (npm)"
+    },
+    {
+      "name": "029testnpm",
+      "versions": [
+        "1.0.0",
+        "*"
+      ],
+      "id": "MAL-2025-1",
+      "summary": "Malicious code in 029testnpm (npm)"
+    },
+    {
+      "name": "100jsss",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2026-3669",
+      "summary": "Malicious code in 100jsss (npm)"
+    },
+    {
+      "name": "-harseurl",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-7",
+      "summary": "Malicious code in -harseurl (npm)"
+    },
+    {
+      "name": "2e6d5f64604be31",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-8702",
+      "summary": "Malicious code in 2e6d5f64604be31 (npm)"
+    },
+    {
+      "name": "-john-wick-4-keanu-reeves-pelicula-completa-h-d-varindo-en-casa-en-lienia-lliena-love",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1682",
+      "summary": "Malicious code in -john-wick-4-keanu-reeves-pelicula-completa-h-d-varindo-en-casa-en-lienia-lliena-love (npm)"
+    },
+    {
+      "name": "0e",
+      "versions": [
+        "0.0.103",
+        "0.0.16",
+        "0.0.191",
+        "0.0.108",
+        "0.0.193",
+        "0.0.12",
+        "0.0.13",
+        "0.0.106",
+        "0.0.1",
+        "0.0.18",
+        "0.0.14",
+        "0.0.15",
+        "0.0.19",
+        "0.0.104",
+        "0.0.109",
+        "0.0.17",
+        "0.0.11",
+        "0.0.105",
+        "0.0.192",
+        "0.0.107",
+        "*"
+      ],
+      "id": "MAL-2025-49456",
+      "summary": "Malicious code in 0e (npm)"
+    },
+    {
+      "name": "11j",
+      "versions": [
+        "1.2.8",
+        "1.1.3",
+        "1.2.2",
+        "1.3.0",
+        "1.1.1",
+        "1.1.8"
+      ],
+      "id": "MAL-2026-3670",
+      "summary": "Malicious code in 11j (npm)"
+    },
+    {
+      "name": "-redux-forjm",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-8",
+      "summary": "Malicious code in -redux-forjm (npm)"
+    },
+    {
+      "name": "3a-look",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-16",
+      "summary": "Malicious code in 3a-look (npm)"
+    },
+    {
+      "name": "-john-wick-4-keanu-reeves-peliculas-completa-h-d-varindo-en-casa-en-lienia-lliena-love",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1683",
+      "summary": "Malicious code in -john-wick-4-keanu-reeves-peliculas-completa-h-d-varindo-en-casa-en-lienia-lliena-love (npm)"
+    },
+    {
+      "name": "0o1d7m",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6976",
+      "summary": "Malicious code in 0o1d7m (npm)"
+    },
+    {
+      "name": "1231dai",
+      "versions": [
+        "1.0.0",
+        "*"
+      ],
+      "id": "MAL-2026-328",
+      "summary": "Malicious code in 1231dai (npm)"
+    },
+    {
+      "name": "0-dns",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-9",
+      "summary": "Malicious code in 0-dns (npm)"
+    },
+    {
+      "name": "3a-spawn",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-17",
+      "summary": "Malicious code in 3a-spawn (npm)"
+    },
+    {
+      "name": "-john-wick-4-keanu-reeves-peliculas-completa-h-d-varindo-en-casa-lliena-espanol",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1684",
+      "summary": "Malicious code in -john-wick-4-keanu-reeves-peliculas-completa-h-d-varindo-en-casa-lliena-espanol (npm)"
+    },
+    {
+      "name": "0vulns-dependency-confusion-poc",
+      "versions": [
+        "1.0.0",
+        ">=1.0.0"
+      ],
+      "id": "MAL-2025-5016",
+      "summary": "Malicious code in 0vulns-dependency-confusion-poc (npm)"
+    },
+    {
+      "name": "1239i32049i",
+      "versions": [
+        "0.1.0"
+      ],
+      "id": "MAL-2026-12117",
+      "summary": "Malicious code in 1239i32049i (npm)"
+    },
+    {
+      "name": "0-shadowenv",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-10",
+      "summary": "Malicious code in 0-shadowenv (npm)"
+    },
+    {
+      "name": "3commas-api-client",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-18",
+      "summary": "Malicious code in 3commas-api-client (npm)"
+    },
+    {
+      "name": "-john-wick-4-keanu-reeves-peliculas-completa-h-d-varindo-en-casa-lliena-love",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1685",
+      "summary": "Malicious code in -john-wick-4-keanu-reeves-peliculas-completa-h-d-varindo-en-casa-lliena-love (npm)"
+    },
+    {
+      "name": "0x-smart-contracts",
+      "versions": [
+        "99.99.99",
+        "*"
+      ],
+      "id": "MAL-2025-3599",
+      "summary": "Malicious code in 0x-smart-contracts (npm)"
+    },
+    {
+      "name": "1apijs",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2026-11206",
+      "summary": "Malicious code in 1apijs (npm)"
+    },
+    {
+      "name": "01template1",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-11",
+      "summary": "Malicious code in 01template1 (npm)"
+    },
+    {
+      "name": "61nlwr0f_bpi",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-19",
+      "summary": "Malicious code in 61nlwr0f_bpi (npm)"
+    },
+    {
+      "name": "-john-wick-4-keanu-reeves-peliculas-completa-varindo-h-d-varindo-en-casa-lliena-",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1686",
+      "summary": "Malicious code in -john-wick-4-keanu-reeves-peliculas-completa-varindo-h-d-varindo-en-casa-lliena- (npm)"
+    },
+    {
+      "name": "0x000asdqwe",
+      "versions": [
+        "5.0.0"
+      ],
+      "id": "MAL-2025-4723",
+      "summary": "Malicious code in 0x000asdqwe (npm)"
+    },
+    {
+      "name": "1cat-tunnel-client-zx",
+      "versions": [
+        "1.0.2",
+        "1.0.3"
+      ],
+      "id": "MAL-2026-4778",
+      "summary": "Malicious code in 1cat-tunnel-client-zx (npm)"
+    },
+    {
+      "name": "0maptrea",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-12",
+      "summary": "Malicious code in 0maptrea (npm)"
+    },
+    {
+      "name": "@12build/account-api-ts-axios-sdk",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-20",
+      "summary": "Malicious code in @12build/account-api-ts-axios-sdk (npm)"
+    },
+    {
+      "name": "-john-wick-4-keanu-reeves-peliculas-completa-varindo-h-d-varindo-en-casa-lliena-espanol",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1687",
+      "summary": "Malicious code in -john-wick-4-keanu-reeves-peliculas-completa-varindo-h-d-varindo-en-casa-lliena-espanol (npm)"
+    },
+    {
+      "name": "0xenkz",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-66553",
+      "summary": "Malicious code in 0xenkz (npm)"
+    },
+    {
+      "name": "1co",
+      "versions": [
+        "1.0.1"
+      ],
+      "id": "MAL-2026-3671",
+      "summary": "Malicious code in 1co (npm)"
+    },
+    {
+      "name": "0supportscolor",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-13",
+      "summary": "Malicious code in 0supportscolor (npm)"
+    },
+    {
+      "name": "@12build/product-api-ts-axios-sdk",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-21",
+      "summary": "Malicious code in @12build/product-api-ts-axios-sdk (npm)"
+    },
+    {
+      "name": "-john-wick-4-keanu-reeves-peliculas-completa-varindo-h-d-varindo-en-casa-tarabi-lliena-",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1688",
+      "summary": "Malicious code in -john-wick-4-keanu-reeves-peliculas-completa-varindo-h-d-varindo-en-casa-tarabi-lliena- (npm)"
+    },
+    {
+      "name": "0xmisoke",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-66554",
+      "summary": "Malicious code in 0xmisoke (npm)"
+    },
+    {
+      "name": "1kzr",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2026-107",
+      "summary": "Malicious code in 1kzr (npm)"
+    },
+    {
+      "name": "0x-fee-wrapper-contract",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-14",
+      "summary": "Malicious code in 0x-fee-wrapper-contract (npm)"
+    },
+    {
+      "name": "@12build/segment-js-sdk",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-22",
+      "summary": "Malicious code in @12build/segment-js-sdk (npm)"
+    },
+    {
+      "name": "-john-wick-keanu-4-k-varindo-en-casa-en-lienia-lliena-love",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1689",
+      "summary": "Malicious code in -john-wick-keanu-4-k-varindo-en-casa-en-lienia-lliena-love (npm)"
+    },
+    {
+      "name": "0xpolygonhermez",
+      "versions": [
+        "6.0.0"
+      ],
+      "id": "MAL-2025-3298",
+      "summary": "Malicious code in 0xpolygonhermez (npm)"
+    },
+    {
+      "name": "1mi",
+      "versions": [
+        "1.0.3"
+      ],
+      "id": "MAL-2026-3672",
+      "summary": "Malicious code in 1mi (npm)"
+    },
+    {
+      "name": "10046.mi.com",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-15",
+      "summary": "Malicious code in 10046.mi.com (npm)"
+    },
+    {
+      "name": "@abdullarahaman/fca-arya-api",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-8126",
+      "summary": "Malicious code in @abdullarahaman/fca-arya-api (npm)"
+    },
+    {
+      "name": "-john-wick-keanu-reeves-pelicula-completa-4-k-varindo-en-casa-en-lienia-lliena-",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1690",
+      "summary": "Malicious code in -john-wick-keanu-reeves-pelicula-completa-4-k-varindo-en-casa-en-lienia-lliena- (npm)"
+    },
+    {
+      "name": "1-mutfru-muytio",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-149906",
+      "summary": "Malicious code in 1-mutfru-muytio (npm)"
+    },
+    {
+      "name": "24712-pl4712",
+      "versions": [
+        "0.0.1"
+      ],
+      "id": "MAL-2026-3358",
+      "summary": "Malicious code in 24712-pl4712 (npm)"
+    },
+    {
+      "name": "13-pkg-13",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-16",
+      "summary": "Malicious code in 13-pkg-13 (npm)"
+    },
+    {
+      "name": "@airslate/front-locales",
+      "versions": [
+        "9.9.11",
+        "9.9.10",
+        "9.9.8",
+        "*"
+      ],
+      "id": "MAL-2023-8517",
+      "summary": "Malicious code in @airslate/front-locales (npm)"
+    },
+    {
+      "name": "-john-wick-keanu-reeves-pelicula-completa-4-k-varindo-en-casa-en-lienia-lliena-love",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1691",
+      "summary": "Malicious code in -john-wick-keanu-reeves-pelicula-completa-4-k-varindo-en-casa-en-lienia-lliena-love (npm)"
+    },
+    {
+      "name": "10-21-landing",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6977",
+      "summary": "Malicious code in 10-21-landing (npm)"
+    },
+    {
+      "name": "24712-pl5004",
+      "versions": [
+        "0.0.1"
+      ],
+      "id": "MAL-2026-3361",
+      "summary": "Malicious code in 24712-pl5004 (npm)"
+    },
+    {
+      "name": "13-pkg-1313",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-17",
+      "summary": "Malicious code in 13-pkg-1313 (npm)"
+    },
+    {
+      "name": "@ans-exam/client",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-23",
+      "summary": "Malicious code in @ans-exam/client (npm)"
+    },
+    {
+      "name": "-whare-to-watch-john-wick-chapter-4-2023-fullmovies-hd-online-at-123",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1692",
+      "summary": "Malicious code in -whare-to-watch-john-wick-chapter-4-2023-fullmovies-hd-online-at-123 (npm)"
+    },
+    {
+      "name": "100000-coin-master-free-spins-dkfefdzd",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-42160",
+      "summary": "Malicious code in 100000-coin-master-free-spins-dkfefdzd (npm)"
+    },
+    {
+      "name": "24712-pl5006",
+      "versions": [
+        "0.0.4",
+        "0.0.2"
+      ],
+      "id": "MAL-2026-3362",
+      "summary": "Malicious code in 24712-pl5006 (npm)"
+    },
+    {
+      "name": "13-pkg-14",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-18",
+      "summary": "Malicious code in 13-pkg-14 (npm)"
+    },
+    {
+      "name": "@apex-ui/core",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-7946",
+      "summary": "Malicious code in @apex-ui/core (npm)"
+    },
+    {
+      "name": "-whare-to-watch-john-wick-chapter-4-2023-fullmovies-hd-online-at-index-main",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1693",
+      "summary": "Malicious code in -whare-to-watch-john-wick-chapter-4-2023-fullmovies-hd-online-at-index-main (npm)"
+    },
+    {
+      "name": "100k-coin-master-free-spins-fdgergr",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-42161",
+      "summary": "Malicious code in 100k-coin-master-free-spins-fdgergr (npm)"
+    },
+    {
+      "name": "24712-plv2",
+      "versions": [
+        "0.4.0",
+        "0.0.2",
+        "0.2.0",
+        "0.1.0"
+      ],
+      "id": "MAL-2026-3357",
+      "summary": "Malicious code in 24712-plv2 (npm)"
+    },
+    {
+      "name": "18f-dashboard",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-19",
+      "summary": "Malicious code in 18f-dashboard (npm)"
+    },
+    {
+      "name": "@apps-common/ui-theme",
+      "versions": [
+        "10.1.0"
+      ],
+      "id": "MAL-2023-8123",
+      "summary": "Malicious code in @apps-common/ui-theme (npm)"
+    },
+    {
+      "name": "-whare-to-watch-john-wick-chapter-4-2023-fullmovies-hd-online-at-suparhit",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1694",
+      "summary": "Malicious code in -whare-to-watch-john-wick-chapter-4-2023-fullmovies-hd-online-at-suparhit (npm)"
+    },
+    {
+      "name": "11ty-simple-page-post-creator",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6978",
+      "summary": "Malicious code in 11ty-simple-page-post-creator (npm)"
+    },
+    {
+      "name": "2fa-exe",
+      "versions": [
+        "1.0.1",
+        "1.0.0"
+      ],
+      "id": "MAL-2026-5740",
+      "summary": "Malicious code in 2fa-exe (npm)"
+    },
+    {
+      "name": "1forge-adapter",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-20",
+      "summary": "Malicious code in 1forge-adapter (npm)"
+    },
+    {
+      "name": "@atbdigitalteam/ui-widgets",
+      "versions": [
+        "2.4.1"
+      ],
+      "id": "MAL-2023-8262",
+      "summary": "Malicious code in @atbdigitalteam/ui-widgets (npm)"
+    },
+    {
+      "name": "-whareo-to-watch-john-wick-chapter-4-2023-fullmovies-hd-online-at-home",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1695",
+      "summary": "Malicious code in -whareo-to-watch-john-wick-chapter-4-2023-fullmovies-hd-online-at-home (npm)"
+    },
+    {
+      "name": "12-mutfru-muytio",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-149907",
+      "summary": "Malicious code in 12-mutfru-muytio (npm)"
+    },
+    {
+      "name": "3pool-sushibar",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2026-3673",
+      "summary": "Malicious code in 3pool-sushibar (npm)"
+    },
+    {
+      "name": "1inch.io",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-21",
+      "summary": "Malicious code in 1inch.io (npm)"
+    },
+    {
+      "name": "@atea/common-design-components",
+      "versions": [
+        "67001.0.1",
+        "*"
+      ],
+      "id": "MAL-2023-8503",
+      "summary": "Malicious code in @atea/common-design-components (npm)"
+    },
+    {
+      "name": "-whareo-to-watch-john-wick-chapter-4-omare-fullmovies-hd-online-at-home",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1696",
+      "summary": "Malicious code in -whareo-to-watch-john-wick-chapter-4-omare-fullmovies-hd-online-at-home (npm)"
+    },
+    {
+      "name": "121block-pattern-explorer",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6979",
+      "summary": "Malicious code in 121block-pattern-explorer (npm)"
+    },
+    {
+      "name": "4exepreds",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2026-2434",
+      "summary": "Malicious code in 4exepreds (npm)"
+    },
+    {
+      "name": "1uphealth-demo-web-app",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-22",
+      "summary": "Malicious code in 1uphealth-demo-web-app (npm)"
+    },
+    {
+      "name": "@atea/warranty-form",
+      "versions": [
+        "13001.0.0",
+        "13375.0.0",
+        "13375.0.1",
+        "*"
+      ],
+      "id": "MAL-2023-8500",
+      "summary": "Malicious code in @atea/warranty-form (npm)"
+    },
+    {
+      "name": "000webhost-admin",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11848",
+      "summary": "Malicious code in 000webhost-admin (npm)"
+    },
+    {
+      "name": "121war-robots-free-demeter",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6980",
+      "summary": "Malicious code in 121war-robots-free-demeter (npm)"
+    },
+    {
+      "name": "4xperss",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2026-2435",
+      "summary": "Malicious code in 4xperss (npm)"
+    },
+    {
+      "name": "2jasmie",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-23",
+      "summary": "Malicious code in 2jasmie (npm)"
+    },
+    {
+      "name": "@badolkhan420/fca-badol",
+      "versions": [
+        "1.5.2",
+        "*"
+      ],
+      "id": "MAL-2023-8280",
+      "summary": "Malicious code in @badolkhan420/fca-badol (npm)"
+    },
+    {
+      "name": "000webhost-analytics",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11849",
+      "summary": "Malicious code in 000webhost-analytics (npm)"
+    },
+    {
+      "name": "12341241234124124124324t",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6981",
+      "summary": "Malicious code in 12341241234124124124324t (npm)"
+    },
+    {
+      "name": "511fola",
+      "versions": [
+        "1.0.0",
+        "99.99.99",
+        "*"
+      ],
+      "id": "MAL-2026-9",
+      "summary": "Malicious code in 511fola (npm)"
+    },
+    {
+      "name": "2k-utils",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-24",
+      "summary": "Malicious code in 2k-utils (npm)"
+    },
+    {
+      "name": "@balea-telefonica/ui",
+      "versions": [
+        "10.10.93",
+        "10.10.92",
+        "10.10.94",
+        "10.10.95",
+        "*"
+      ],
+      "id": "MAL-2023-24",
+      "summary": "Malicious code in @balea-telefonica/ui (npm)"
+    },
+    {
+      "name": "000webhost-api-client",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11851",
+      "summary": "Malicious code in 000webhost-api-client (npm)"
+    },
+    {
+      "name": "12jeet2025",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6982",
+      "summary": "Malicious code in 12jeet2025 (npm)"
+    },
+    {
+      "name": "6161test1234",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2026-2967",
+      "summary": "Malicious code in 6161test1234 (npm)"
+    },
+    {
+      "name": "2key-metrics",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-25",
+      "summary": "Malicious code in 2key-metrics (npm)"
+    },
+    {
+      "name": "@banana-cake-pop/data",
+      "versions": [
+        "1.9.10"
+      ],
+      "id": "MAL-2023-8391",
+      "summary": "Malicious code in @banana-cake-pop/data (npm)"
+    },
+    {
+      "name": "000webhost-api",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11850",
+      "summary": "Malicious code in 000webhost-api (npm)"
+    },
+    {
+      "name": "12octsportsday",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-4291",
+      "summary": "Malicious code in 12octsportsday (npm)"
+    },
+    {
+      "name": "66o",
+      "versions": [
+        "0.0.3",
+        "0.0.196",
+        "0.0.197",
+        "0.0.18",
+        "0.0.192",
+        "0.0.5"
+      ],
+      "id": "MAL-2026-3674",
+      "summary": "Malicious code in 66o (npm)"
+    },
+    {
+      "name": "2kit",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-26",
+      "summary": "Malicious code in 2kit (npm)"
+    },
+    {
+      "name": "@bingads-webui-campaign-react/labels-page",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-27",
+      "summary": "Malicious code in @bingads-webui-campaign-react/labels-page (npm)"
+    },
+    {
+      "name": "000webhost-auth",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11852",
+      "summary": "Malicious code in 000webhost-auth (npm)"
+    },
+    {
+      "name": "1337qq-js",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6983",
+      "summary": "Malicious code in 1337qq-js (npm)"
+    },
+    {
+      "name": "6cc",
+      "versions": [
+        "0.2.8"
+      ],
+      "id": "MAL-2026-3675",
+      "summary": "Malicious code in 6cc (npm)"
+    },
+    {
+      "name": "34ref43efwrf3we4",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-27",
+      "summary": "Malicious code in 34ref43efwrf3we4 (npm)"
+    },
+    {
+      "name": "@bingads-webui-campaign/accounts-grid",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-25",
+      "summary": "Malicious code in @bingads-webui-campaign/accounts-grid (npm)"
+    },
+    {
+      "name": "000webhost-cache",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11853",
+      "summary": "Malicious code in 000webhost-cache (npm)"
+    },
+    {
+      "name": "13500-free-fortnite-v-bucks-updated-dkdzk",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-42162",
+      "summary": "Malicious code in 13500-free-fortnite-v-bucks-updated-dkdzk (npm)"
+    },
+    {
+      "name": "88q",
+      "versions": [
+        "1.1.1",
+        "1.4.8",
+        "1.2.6",
+        "1.3.6",
+        "1.0.2",
+        "1.2.4",
+        "1.4.9",
+        "1.1.4",
+        "1.4.6",
+        "1.3.3",
+        "1.0.7",
+        "1.3.5",
+        "1.2.3",
+        "1.2.5",
+        "1.4.7",
+        "1.2.7",
+        "1.3.2",
+        "1.1.5"
+      ],
+      "id": "MAL-2026-3676",
+      "summary": "Malicious code in 88q (npm)"
+    },
+    {
+      "name": "3exprem",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-28",
+      "summary": "Malicious code in 3exprem (npm)"
+    },
+    {
+      "name": "@bingads-webui-campaign/facebook-import-page",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-26",
+      "summary": "Malicious code in @bingads-webui-campaign/facebook-import-page (npm)"
+    },
+    {
+      "name": "000webhost-checkout",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11854",
+      "summary": "Malicious code in 000webhost-checkout (npm)"
+    },
+    {
+      "name": "13500-free-vbucks-fortnite-klhykgf",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-42163",
+      "summary": "Malicious code in 13500-free-vbucks-fortnite-klhykgf (npm)"
+    },
+    {
+      "name": "8oo",
+      "versions": [
+        "0.0.19",
+        "0.0.12",
+        "0.0.6",
+        "0.0.21",
+        "0.0.18",
+        "0.0.15",
+        "0.0.14",
+        "0.0.8",
+        "0.0.17",
+        "0.0.22",
+        "0.0.4",
+        "0.0.16",
+        "0.0.13",
+        "0.0.9",
+        "0.0.5",
+        "0.0.11"
+      ],
+      "id": "MAL-2026-3677",
+      "summary": "Malicious code in 8oo (npm)"
+    },
+    {
+      "name": "3x3s",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-29",
+      "summary": "Malicious code in 3x3s (npm)"
+    },
+    {
+      "name": "@binter/inputs",
+      "versions": [
+        "1.7.9"
+      ],
+      "id": "MAL-2023-8313",
+      "summary": "Malicious code in @binter/inputs (npm)"
+    },
+    {
+      "name": "000webhost-cloud",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11855",
+      "summary": "Malicious code in 000webhost-cloud (npm)"
+    },
+    {
+      "name": "13k-free-fortnite-v-bucks-dkzledz",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-42164",
+      "summary": "Malicious code in 13k-free-fortnite-v-bucks-dkzledz (npm)"
+    },
+    {
+      "name": "8q",
+      "versions": [
+        "1.8.2"
+      ],
+      "id": "MAL-2026-3678",
+      "summary": "Malicious code in 8q (npm)"
+    },
+    {
+      "name": "47cliens_server",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-30",
+      "summary": "Malicious code in 47cliens_server (npm)"
+    },
+    {
+      "name": "@bitsoex/react-design-system",
+      "versions": [
+        "14.1.3",
+        "14.1.4",
+        "*"
+      ],
+      "id": "MAL-2023-8373",
+      "summary": "Malicious code in @bitsoex/react-design-system (npm)"
+    },
+    {
+      "name": "000webhost-connect",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11856",
+      "summary": "Malicious code in 000webhost-connect (npm)"
+    },
+    {
+      "name": "16bit-js-vm-model",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6984",
+      "summary": "Malicious code in 16bit-js-vm-model (npm)"
+    },
+    {
+      "name": "8x8-developer-docs",
+      "versions": [
+        "2.0.0",
+        "*"
+      ],
+      "id": "MAL-2026-1379",
+      "summary": "Malicious code in 8x8-developer-docs (npm)"
+    },
+    {
+      "name": "4eatstrap",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-31",
+      "summary": "Malicious code in 4eatstrap (npm)"
+    },
+    {
+      "name": "@blk/idm-okta-sdk-js",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-28",
+      "summary": "Malicious code in @blk/idm-okta-sdk-js (npm)"
+    },
+    {
+      "name": "000webhost-database",
+      "versions": [
+        "999.9.9",
+        "*"
+      ],
+      "id": "MAL-2024-11857",
+      "summary": "Malicious code in 000webhost-database (npm)"
+    },
+    {
+      "name": "182-23run",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-5831",
+      "summary": "Malicious code in 182-23run (npm)"
+    },
+    {
+      "name": "9remote",
+      "versions": [
+        "2.1.5",
+        "2.1.14",
+        "2.1.20",
+        "2.1.9",
+        "2.1.16",
+        "2.1.21",
+        "2.1.6",
+        "2.2.5",
+        "2.2.6",
+        "2.1.1"
+      ],
+      "id": "MAL-2026-13406",
+      "summary": "Malicious code in 9remote (npm)"
+    },
+    {
+      "name": "4efkj4w3e9f",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-32",
+      "summary": "Malicious code in 4efkj4w3e9f (npm)"
+    },
+    {
+      "name": "@bootsantos/bootsantos",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-8243",
+      "summary": "Malicious code in @bootsantos/bootsantos (npm)"
+    },
+    {
+      "name": "04axvm",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2024-9114",
+      "summary": "Malicious code in 04axvm (npm)"
+    },
+    {
+      "name": "18mr4e",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6985",
+      "summary": "Malicious code in 18mr4e (npm)"
+    },
+    {
+      "name": "@0l00000l/auth",
+      "versions": [
+        "1.1.4",
+        "1.1.3"
+      ],
+      "id": "MAL-2026-13407",
+      "summary": "Malicious code in @0l00000l/auth (npm)"
+    },
+    {
+      "name": "4ff-lib-foundation",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-33",
+      "summary": "Malicious code in 4ff-lib-foundation (npm)"
+    },
+    {
+      "name": "@brand_apps/easystart",
+      "versions": [
+        "30.0.1",
+        "30.0.3",
+        "30.0.2",
+        "*"
+      ],
+      "id": "MAL-2023-29",
+      "summary": "Malicious code in @brand_apps/easystart (npm)"
+    },
+    {
+      "name": "0g-da-contract",
+      "versions": [
+        "2.2.0",
+        "*"
+      ],
+      "id": "MAL-2024-8886",
+      "summary": "Malicious code in 0g-da-contract (npm)"
+    },
+    {
+      "name": "1inch-p2p-sdk",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6986",
+      "summary": "Malicious code in 1inch-p2p-sdk (npm)"
+    },
+    {
+      "name": "@0xlr/clerk-auth",
+      "versions": [
+        "999.0.0",
+        "*"
+      ],
+      "id": "MAL-2026-5385",
+      "summary": "Malicious code in @0xlr/clerk-auth (npm)"
+    },
+    {
+      "name": "4keylpress",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-34",
+      "summary": "Malicious code in 4keylpress (npm)"
+    },
+    {
+      "name": "@bt-lotus-cicd/eslint-config-lotus",
+      "versions": [
+        "2.0.1",
+        "2.0.2",
+        "2.0.0",
+        "1.0.0",
+        "*"
+      ],
+      "id": "MAL-2023-7947",
+      "summary": "Malicious code in @bt-lotus-cicd/eslint-config-lotus (npm)"
+    },
+    {
+      "name": "0g-storage-contracts",
+      "versions": [
+        "2.5.0",
+        "2.0.0",
+        "*"
+      ],
+      "id": "MAL-2024-8819",
+      "summary": "Malicious code in 0g-storage-contracts (npm)"
+    },
+    {
+      "name": "1libxmljs2",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-190556",
+      "summary": "Malicious code in 1libxmljs2 (npm)"
+    },
+    {
+      "name": "@0xlr/dep-confusion-poc",
+      "versions": [
+        "0.0.1",
+        "*"
+      ],
+      "id": "MAL-2026-11431",
+      "summary": "Malicious code in @0xlr/dep-confusion-poc (npm)"
+    },
+    {
+      "name": "4pahtoregexp",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-35",
+      "summary": "Malicious code in 4pahtoregexp (npm)"
+    },
+    {
+      "name": "@buffer-mono/non-secure",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-30",
+      "summary": "Malicious code in @buffer-mono/non-secure (npm)"
+    },
+    {
+      "name": "0sxokg",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2024-9115",
+      "summary": "Malicious code in 0sxokg (npm)"
+    },
+    {
+      "name": "1lkzd8",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6987",
+      "summary": "Malicious code in 1lkzd8 (npm)"
+    },
+    {
+      "name": "@0xlr/prisma-client-js",
+      "versions": [
+        "999.0.0",
+        "*"
+      ],
+      "id": "MAL-2026-5386",
+      "summary": "Malicious code in @0xlr/prisma-client-js (npm)"
+    },
+    {
+      "name": "5blong",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-36",
+      "summary": "Malicious code in 5blong (npm)"
+    },
+    {
+      "name": "@buffer-mono/png-export",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-31",
+      "summary": "Malicious code in @buffer-mono/png-export (npm)"
+    },
+    {
+      "name": "1-2-customization-basic-format",
+      "versions": [
+        "999.0.1",
+        "999.0.2",
+        "*"
+      ],
+      "id": "MAL-2024-9214",
+      "summary": "Malicious code in 1-2-customization-basic-format (npm)"
+    },
+    {
+      "name": "1password-sdk-examples",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2025-1540",
+      "summary": "Malicious code in 1password-sdk-examples (npm)"
+    },
+    {
+      "name": "@0xlr/question-types",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2026-11432",
+      "summary": "Malicious code in @0xlr/question-types (npm)"
+    },
+    {
+      "name": "5rn",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-37",
+      "summary": "Malicious code in 5rn (npm)"
+    },
+    {
+      "name": "@calizahq/react-components",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-32",
+      "summary": "Malicious code in @calizahq/react-components (npm)"
+    },
+    {
+      "name": "1.7m-views-in-boots-the-last-wish-2023-full-online-free-on-streaming-at-home",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1697",
+      "summary": "Malicious code in 1.7m-views-in-boots-the-last-wish-2023-full-online-free-on-streaming-at-home (npm)"
+    },
+    {
+      "name": "1password-sdk-exapmles",
+      "versions": [
+        "1.0.0",
+        "*"
+      ],
+      "id": "MAL-2025-327",
+      "summary": "Malicious code in 1password-sdk-exapmles (npm)"
+    },
+    {
+      "name": "@0xlr/sentry-web",
+      "versions": [
+        "999.0.0",
+        "*"
+      ],
+      "id": "MAL-2026-5387",
+      "summary": "Malicious code in @0xlr/sentry-web (npm)"
+    },
+    {
+      "name": "5string",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-38",
+      "summary": "Malicious code in 5string (npm)"
+    },
+    {
+      "name": "@calizahq/react-hooks",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-33",
+      "summary": "Malicious code in @calizahq/react-hooks (npm)"
+    },
+    {
+      "name": "1234wdzwkcsf",
+      "versions": [
+        "1.0.0",
+        "*"
+      ],
+      "id": "MAL-2024-10493",
+      "summary": "Malicious code in 1234wdzwkcsf (npm)"
+    },
+    {
+      "name": "1uniswapinterface",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-47984",
+      "summary": "Malicious code in 1uniswapinterface (npm)"
+    },
+    {
+      "name": "@0xlr/stripe-checkout-js",
+      "versions": [
+        "999.0.0",
+        "*"
+      ],
+      "id": "MAL-2026-5388",
+      "summary": "Malicious code in @0xlr/stripe-checkout-js (npm)"
+    },
+    {
+      "name": "5to6-exports",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-39",
+      "summary": "Malicious code in 5to6-exports (npm)"
+    },
+    {
+      "name": "@cat-abdulla/fca-abdulla-api",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-8164",
+      "summary": "Malicious code in @cat-abdulla/fca-abdulla-api (npm)"
+    },
+    {
+      "name": "1nzcej",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2024-9116",
+      "summary": "Malicious code in 1nzcej (npm)"
+    },
+    {
+      "name": "1unitest",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-47985",
+      "summary": "Malicious code in 1unitest (npm)"
+    },
+    {
+      "name": "@0xlr/stripe-frontend",
+      "versions": [
+        "999.0.0",
+        "*"
+      ],
+      "id": "MAL-2026-5389",
+      "summary": "Malicious code in @0xlr/stripe-frontend (npm)"
+    },
+    {
+      "name": "6ini",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-40",
+      "summary": "Malicious code in 6ini (npm)"
+    },
+    {
+      "name": "@chainxxx/act-utils",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2023-8771",
+      "summary": "Malicious code in @chainxxx/act-utils (npm)"
+    },
+    {
+      "name": "2.7m-views-in-boots-the-last-wish-2023-full-online-free-on-streaming-at-home",
+      "versions": [
+        "1.0.0"
+      ],
+      "id": "MAL-2024-1698",
+      "summary": "Malicious code in 2.7m-views-in-boots-the-last-wish-2023-full-online-free-on-streaming-at-home (npm)"
+    },
+    {
+      "name": "1vta9q",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-6988",
+      "summary": "Malicious code in 1vta9q (npm)"
+    },
+    {
+      "name": "@0xlr/supabase-db",
+      "versions": [
+        "999.0.0",
+        "*"
+      ],
+      "id": "MAL-2026-5390",
+      "summary": "Malicious code in @0xlr/supabase-db (npm)"
+    },
+    {
+      "name": "6jestlr",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2022-41",
+      "summary": "Malicious code in 6jestlr (npm)"
+    },
+    {
+      "name": "@chegg/wtai-upload-widget",
+      "versions": [
+        "9.999.2",
+        "9.999.8",
+        "*"
+      ],
+      "id": "MAL-2023-34",
+      "summary": "Malicious code in @chegg/wtai-upload-widget (npm)"
+    },
+    {
+      "name": "24hipp",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2024-9117",
+      "summary": "Malicious code in 24hipp (npm)"
+    },
+    {
+      "name": "1xbet-prilozhenie-android-guid-bu43so24l",
+      "versions": [
+        "*"
+      ],
+      "id": "MAL-2025-47231",
+      "summary": "Malicious code in 1xbet-prilozhenie-android-guid-bu43so24l (npm)"
+    },
+    {
+      "name": "@0xlr/test-callback",
+      "versions": [
+        "1.0.0",
+        "*"
+      ],
+      "id": "MAL-2026-11433",
+      "summary": "Malicious code in @0xlr/test-callback (npm)"
+    }
+  ]
+}

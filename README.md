@@ -18,8 +18,11 @@ open so the next person benefits from your analysis.
 Needs Node ≥ 20. **No dependencies to install.**
 
 ```bash
-# analyze a live npm update
-node bin/deltagate.js npm left-pad 1.2.0 1.3.0
+# analyze a live update — npm, PyPI, Cargo, or RubyGems
+node bin/deltagate.js npm   left-pad 1.2.0 1.3.0
+node bin/deltagate.js pypi   requests 2.31.0 2.32.0
+node bin/deltagate.js cargo  anyhow 1.0.85 1.0.86
+node bin/deltagate.js gem    colorize 0.8.1 1.0.0
 
 # analyze two local package directories (offline)
 node bin/deltagate.js diff ./pkg-old ./pkg-new
@@ -85,11 +88,23 @@ src/untar.js         dependency-free tar reader
 src/normalize.js     per-file profile: sha256, entropy, unicode, magic bytes
 src/heuristics.js    Sentinel — the deterministic rules (score ceilings)
 src/score.js         MIN-fusion of ceilings + penalties → score / band / verdict
-src/analyze.js       orchestrator → verdict record
+src/analyze.js       orchestrator → verdict record (selects the ecosystem adapter)
+src/heuristics.js    Sentinel — ecosystem-agnostic rules
+src/unpack.js        dependency-free tar / tar.gz / zip reader (wheels, crates, gems)
+src/ecosystems/      per-ecosystem adapters (npm, pypi, cargo, rubygems): fetch + install-hook rules
 src/ai/              injection-resistant LLM harness (schema, encode, client, harness)
 test/run.js          golden tests reconstructing real attack shapes
 test/ai.test.js      AI-harness tests (stub model, no API key needed)
+eval/                corpus + eval harness (recall / false-positive measurement)
 ```
+
+## Evaluation
+
+`node eval/run.mjs` measures the engine against reconstructed attack shapes and
+live benign updates. Current deterministic engine: **8/8 recall** on the
+synthetic npm attack shapes, **0% false positives** across 31 benign updates.
+The corpus uses `ossf/malicious-packages` for labels and Datadog's dataset for
+real sample bytes (see `eval/README.md`).
 
 ## Not built yet (next phases)
 
@@ -97,7 +112,7 @@ test/ai.test.js      AI-harness tests (stub model, no API key needed)
   publishes the signed verdict to a public repo so everyone benefits.
 - **Local enforcement** — the metadata-filtering proxy / wrappers that actually
   hold the update in each package manager.
-- **More ecosystems** — PyPI next, then the rest via per-ecosystem adapters.
+- **More ecosystems** — Maven, NuGet, Go, Composer round out the set.
 
 ## License
 

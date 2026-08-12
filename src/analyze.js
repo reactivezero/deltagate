@@ -1,12 +1,13 @@
 // Orchestrator: two artifacts (as Map<path,Buffer>) -> a verdict record.
-// The deterministic Sentinel layer always runs. The AI layer is optional and
-// async; its findings are merged in and can only lower the score.
+// The deterministic Sentinel layer always runs (with the ecosystem's adapter
+// supplying install/build-hook rules). The AI layer is optional and async; its
+// findings are merged in and can only lower the score.
 
 import { profileArtifact } from './normalize.js';
 import { runSentinel } from './heuristics.js';
 import { fuse } from './score.js';
-import { fetchNpm } from './loaders.js';
 import { analyzeDiffWithAI } from './ai/index.js';
+import { getAdapter } from './ecosystems/index.js';
 
 function delta(from, to) {
   const added = [], modified = [], removed = [];
@@ -38,18 +39,18 @@ function assemble(subject, fromP, toP, findings, ai) {
   };
 }
 
-/** Deterministic-only analysis (synchronous). */
-export function analyzeArtifacts(fromFiles, toFiles, subject = {}) {
+/** Deterministic-only analysis (synchronous). Defaults to npm rules. */
+export function analyzeArtifacts(fromFiles, toFiles, subject = {}, adapter = getAdapter('npm')) {
   const fromP = profileArtifact(fromFiles);
   const toP = profileArtifact(toFiles);
-  return assemble(subject, fromP, toP, runSentinel(fromP, toP), null);
+  return assemble(subject, fromP, toP, runSentinel(fromP, toP, adapter), null);
 }
 
 /** Deterministic + optional AI layer (async). opts: {ai, callModel, model, probe}. */
-export async function analyzeArtifactsAI(fromFiles, toFiles, subject = {}, opts = {}) {
+export async function analyzeArtifactsAI(fromFiles, toFiles, subject = {}, opts = {}, adapter = getAdapter('npm')) {
   const fromP = profileArtifact(fromFiles);
   const toP = profileArtifact(toFiles);
-  const findings = runSentinel(fromP, toP);
+  const findings = runSentinel(fromP, toP, adapter);
   let ai = null;
   if (opts.ai) {
     const d = delta(fromP, toP);
@@ -62,13 +63,19 @@ export async function analyzeArtifactsAI(fromFiles, toFiles, subject = {}, opts 
   return assemble(subject, fromP, toP, findings, ai);
 }
 
-/** Fetch two npm versions live and analyze them (AI optional via opts.ai). */
-export async function analyzeNpm(name, fromVer, toVer, opts = {}) {
-  const [from, to] = await Promise.all([fetchNpm(name, fromVer), fetchNpm(name, toVer)]);
+/** Fetch two versions from an ecosystem's registry and analyze them. */
+async function analyzeEcosystem(ecosystem, name, fromVer, toVer, opts = {}) {
+  const adapter = getAdapter(ecosystem);
+  const [from, to] = await Promise.all([adapter.fetch(name, fromVer), adapter.fetch(name, toVer)]);
   const subject = {
-    ecosystem: 'npm', name,
+    ecosystem, name,
     from: from.resolvedVersion, to: to.resolvedVersion,
     fromDigest: from.digest, toDigest: to.digest,
   };
-  return analyzeArtifactsAI(from.files, to.files, subject, opts);
+  return analyzeArtifactsAI(from.files, to.files, subject, opts, adapter);
 }
+
+export const analyzeNpm = (name, f, t, o) => analyzeEcosystem('npm', name, f, t, o);
+export const analyzePypi = (name, f, t, o) => analyzeEcosystem('pypi', name, f, t, o);
+export const analyzeCargo = (name, f, t, o) => analyzeEcosystem('cargo', name, f, t, o);
+export const analyzeRubygems = (name, f, t, o) => analyzeEcosystem('rubygems', name, f, t, o);

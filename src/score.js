@@ -4,9 +4,13 @@
 
 const THRESHOLD = 50; // block below this by default
 
-export function fuse(findings) {
+export function fuse(findings, opts = {}) {
+  // Both caps (ceilings) and penalties (deductions) only ever LOWER the score.
+  // Sentinel and the AI layer both feed findings here; neither can raise it.
   const caps = findings.map((f) => f.cap).filter((c) => Number.isFinite(c));
-  const score = caps.length ? Math.min(100, ...caps) : 100;
+  const penalty = findings.reduce((s, f) => s + (Number.isFinite(f.penalty) ? f.penalty : 0), 0);
+  const base = 100 - penalty;
+  const score = Math.max(0, Math.min(base, caps.length ? Math.min(...caps) : 100));
 
   let band;
   if (score < 25) band = 'block';
@@ -16,10 +20,10 @@ export function fuse(findings) {
 
   const verdict = score < THRESHOLD ? 'HOLD' : 'ALLOW';
 
-  // Deterministic findings are high-confidence evidence. A *clean* deterministic
-  // result is only low-confidence here — it means "no red flags in the rules",
-  // not "safe". The Phase-2 LLM layer supplies semantic judgment on clean diffs.
-  const confidence = findings.length ? 'high' : 'low';
+  // A clean *deterministic-only* result is low-confidence — it means "no rule
+  // flags", not "safe". A reliable AI pass supplies the semantic judgment that
+  // makes a clean verdict trustworthy; any finding is high-confidence evidence.
+  const confidence = (opts.aiReliable || findings.length) ? 'high' : 'low';
 
   return { score, band, verdict, confidence, threshold: THRESHOLD };
 }

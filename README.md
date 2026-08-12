@@ -24,12 +24,34 @@ node bin/deltagate.js npm left-pad 1.2.0 1.3.0
 # analyze two local package directories (offline)
 node bin/deltagate.js diff ./pkg-old ./pkg-new
 
+# add the AI intent layer (needs an Anthropic API key, not a Claude.ai subscription)
+ANTHROPIC_API_KEY=sk-ant-... node bin/deltagate.js npm <pkg> <from> <to> --ai
+
 # raw verdict record (what gets published to the open DB)
 node bin/deltagate.js npm <pkg> <from> <to> --json
 
 # run the test suite
 npm test
 ```
+
+## The AI layer (`--ai`)
+
+On top of the deterministic rules, an LLM reads the changed code for *intent*.
+The harness is built to survive a hostile diff:
+
+- The model **never emits a score** — it returns typed, evidence-anchored
+  capability findings, and a fixed table turns those into caps/penalties.
+- Findings can only **lower** the score, never raise it. A fully
+  prompt-injected model degrades the system to deterministic-rules-only.
+- The diff is fed as **untrusted data**: comments split into a separate channel,
+  all non-ASCII armored to visible escapes, wrapped in a per-run nonce.
+- A **seeded probe** every run detects a suppressed or instruction-following
+  model; a compliance nonce catches a model that can't follow the contract.
+- Every finding is **grounded** (its cited token must exist in the sent code) or
+  it's dropped. Detected prompt-injection text caps the score at 5.
+
+Model is configurable via `DELTAGATE_MODEL` (default `claude-haiku-4-5`). The
+API client uses raw `fetch` — no SDK dependency, keeping the tool zero-dep.
 
 The CLI exits `1` when the gate would **hold** an update and `0` when it allows
 it, so it drops straight into CI.
@@ -62,16 +84,15 @@ src/loaders.js       fetch from npm (integrity-verified) or a local dir
 src/untar.js         dependency-free tar reader
 src/normalize.js     per-file profile: sha256, entropy, unicode, magic bytes
 src/heuristics.js    Sentinel — the deterministic rules (score ceilings)
-src/score.js         MIN-fusion of ceilings → score / band / verdict
+src/score.js         MIN-fusion of ceilings + penalties → score / band / verdict
 src/analyze.js       orchestrator → verdict record
+src/ai/              injection-resistant LLM harness (schema, encode, client, harness)
 test/run.js          golden tests reconstructing real attack shapes
+test/ai.test.js      AI-harness tests (stub model, no API key needed)
 ```
 
 ## Not built yet (next phases)
 
-- **AI layer** — an LLM reads the changed code for intent on diffs that pass the
-  rules. It never emits the score; it returns typed, evidence-anchored findings
-  that can only *lower* the score. (Judges the "clean, low confidence" cases.)
 - **Open verdict DB** — a miss fires a request; our backend analyzes it and
   publishes the signed verdict to a public repo so everyone benefits.
 - **Local enforcement** — the metadata-filtering proxy / wrappers that actually

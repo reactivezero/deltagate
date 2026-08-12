@@ -5,8 +5,9 @@
 //   deltagate diff <dirA> <dirB>           analyze two local package dirs
 //   ... add --json for the raw verdict record
 
-import { analyzeNpm, analyzeArtifacts } from '../src/analyze.js';
+import { analyzeNpm, analyzeArtifacts, analyzeArtifactsAI } from '../src/analyze.js';
 import { loadDir } from '../src/loaders.js';
+import { hasApiKey } from '../src/ai/index.js';
 
 const BANDS = {
   block:   { label: 'BLOCK',   sym: '●', color: '\x1b[31m' },
@@ -39,7 +40,15 @@ function print(v) {
       for (const e of f.evidence) console.log(`    ${DIM}${e.file} — ${e.detail}${RST}`);
     }
   } else {
-    console.log(`  ${DIM}no deterministic red flags (Phase 2 AI layer would judge intent here)${RST}`);
+    console.log(`  ${DIM}no red flags${RST}`);
+  }
+
+  const a = v.engine?.ai;
+  if (a?.ran) {
+    const state = a.reliable ? 'reliable' : `unreliable${a.flags?.length ? ' (' + a.flags.join(', ') + ')' : ''}`;
+    console.log(`  ${DIM}AI layer: ${a.model} — ${state}${RST}`);
+  } else if (a && a.error) {
+    console.log(`  ${DIM}AI layer: skipped (${a.error})${RST}`);
   }
 
   console.log('');
@@ -55,24 +64,33 @@ function print(v) {
 async function main() {
   const argv = process.argv.slice(2);
   const json = argv.includes('--json');
-  const args = argv.filter((a) => a !== '--json');
+  let ai = argv.includes('--ai');
+  const args = argv.filter((a) => a !== '--json' && a !== '--ai');
   const cmd = args[0];
+
+  if (ai && !hasApiKey()) {
+    console.error('deltagate: --ai needs ANTHROPIC_API_KEY (an Anthropic API key, not a Claude.ai subscription). Running deterministic-only.\n');
+    ai = false;
+  }
 
   try {
     let verdict;
     if (cmd === 'npm') {
       const [, name, from, to] = args;
       if (!name || !from || !to) throw new Error('usage: deltagate npm <package> <from> <to>');
-      verdict = await analyzeNpm(name, from, to);
+      verdict = await analyzeNpm(name, from, to, { ai });
     } else if (cmd === 'diff') {
       const [, a, b] = args;
       if (!a || !b) throw new Error('usage: deltagate diff <dirA> <dirB>');
-      verdict = analyzeArtifacts(loadDir(a), loadDir(b), { ecosystem: 'dir', from: a, to: b });
+      const subject = { ecosystem: 'dir', from: a, to: b };
+      verdict = ai
+        ? await analyzeArtifactsAI(loadDir(a), loadDir(b), subject, { ai: true })
+        : analyzeArtifacts(loadDir(a), loadDir(b), subject);
     } else {
-      console.error('deltagate — dependency-update gate (Phase 1)\n');
+      console.error('deltagate — dependency-update gate\n');
       console.error('  deltagate npm  <package> <from> <to>   analyze a live npm update');
       console.error('  deltagate diff <dirA> <dirB>           analyze two local package dirs');
-      console.error('  (add --json for the raw verdict record)');
+      console.error('  flags: --ai (LLM intent layer, needs ANTHROPIC_API_KEY) · --json (raw record)');
       process.exit(2);
     }
 

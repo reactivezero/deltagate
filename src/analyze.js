@@ -8,6 +8,7 @@ import { runSentinel } from './heuristics.js';
 import { fuse } from './score.js';
 import { analyzeDiffWithAI } from './ai/index.js';
 import { getAdapter } from './ecosystems/index.js';
+import { lookup, save, makeRecord } from './verdict/index.js';
 
 function delta(from, to) {
   const added = [], modified = [], removed = [];
@@ -72,7 +73,15 @@ async function analyzeEcosystem(ecosystem, name, fromVer, toVer, opts = {}) {
     from: from.resolvedVersion, to: to.resolvedVersion,
     fromDigest: from.digest, toDigest: to.digest,
   };
-  return analyzeArtifactsAI(from.files, to.files, subject, opts, adapter);
+  // Open verdict DB read-through: one analysis of a given diff serves everyone.
+  // Keyed by artifact digests, so a cache hit is the exact same bytes.
+  if (!opts.fresh) {
+    const cached = await lookup(subject);
+    if (cached) return cached;
+  }
+  const verdict = await analyzeArtifactsAI(from.files, to.files, subject, opts, adapter);
+  save(makeRecord(verdict, new Date().toISOString())); // persist the fresh result
+  return verdict;
 }
 
 export const analyzeNpm = (name, f, t, o) => analyzeEcosystem('npm', name, f, t, o);

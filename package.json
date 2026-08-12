@@ -9,7 +9,7 @@
     "deltagate": "bin/deltagate.js"
   },
   "scripts": {
-    "test": "node test/run.js && node test/ai.test.js",
+    "test": "node test/run.js && node test/ai.test.js && node test/verdict.test.js && node test/enforce.test.js",
     "eval": "node eval/run.mjs",
     "analyze": "node bin/deltagate.js"
   },

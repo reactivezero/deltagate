@@ -134,6 +134,48 @@ dependency tree). Model via `DELTAGATE_MODEL` (default `claude-haiku-4-5`).
 Needs an **Anthropic API key** (`console.anthropic.com`) — a Claude.ai / Claude
 Max subscription is billed separately and does not grant API access.
 
+## Hold the update, don't just report it
+
+DeltaGate can sit in front of your package manager and *hold* a risky version so
+the resolver never selects it — no build break, you simply stay on what you have.
+
+```bash
+# run any install through the gate, one-off (nothing written to disk)
+deltagate run -- npm install left-pad
+
+# or wire it in persistently (reversible)
+deltagate proxy &     # localhost npm registry filter
+deltagate enable      # point ~/.npmrc at the proxy
+deltagate status      # what's wired
+deltagate disable     # revert, byte-for-byte
+```
+
+It works by **filtering the version list**, not rewriting bytes: a held version
+disappears from the packument the resolver sees, so npm settles on the newest
+allowed version — and because tarball bytes are never touched, npm's integrity
+check still passes on whatever it installs. (npm today; other managers follow
+the same adapter pattern.)
+
+## Open verdict database
+
+One analysis of a given diff should serve everyone. Every verdict is a
+**content-addressed record** — keyed by the exact artifact digests, so a cache
+hit is the same bytes — and analysis is read-through: local cache → a public
+static DB (`DELTAGATE_DB_URL`, servable straight from GitHub raw or a CDN) →
+analyze-it-yourself on a miss.
+
+```bash
+deltagate lookup npm chalk 5.3.0 5.3.1   # query the DB, no analysis
+deltagate export verdicts.jsonl          # your local records, shareable
+deltagate npm <pkg> <from> <to> --fresh  # bypass the cache
+```
+
+Records store finding **codes only** — never the attacker-controlled finding
+text — so a published verdict can't carry a second-order prompt injection into
+the next person's analysis. (The central service that pre-analyzes popular
+packages and publishes the static tree is the next milestone; the record format,
+local cache, and read-through are here today.)
+
 ## How it compares
 
 | | AI on the **diff** | Blocks locally | Every language | **Open** verdicts |
@@ -171,7 +213,9 @@ src/unpack.js        dependency-free tar / tar.gz / zip reader
 src/normalize.js     per-file profile: sha256, entropy, unicode, magic bytes
 src/score.js         MIN-fusion of ceilings + penalties → score / band / verdict
 src/ai/              injection-resistant LLM harness
-src/analyze.js       orchestrator → verdict record
+src/verdict/         open verdict DB: content-addressed records, cache, read-through
+src/enforce/         local npm enforcement: filtering proxy, wrapper, reversible wiring
+src/analyze.js       orchestrator → verdict record (+ verdict-DB read-through)
 eval/                corpus + recall / false-positive harness
 test/                golden tests (no API key needed)
 ```
@@ -179,10 +223,11 @@ test/                golden tests (no API key needed)
 ## Status & roadmap
 
 **Shipped:** deterministic engine · injection-resistant AI layer · npm, PyPI,
-Cargo, RubyGems · eval harness.
-**Next:** open verdict database (request-driven, published in the open) · local
-enforcement (metadata-filtering proxy that holds the update) · Maven, NuGet, Go,
-Composer.
+Cargo, RubyGems · eval harness · open verdict DB (records, cache, read-through) ·
+local npm enforcement (filtering proxy + reversible wiring).
+**Next:** the central publish backend (pre-analyze popular packages → public
+static DB) · verdict signing & consensus · enforcement for PyPI/Cargo/RubyGems ·
+Maven, NuGet, Go, Composer.
 
 ## Contributing & security
 
